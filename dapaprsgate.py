@@ -79,6 +79,7 @@ class APRSMessage(object):
 	else:
 		# Vede il campo From ma seleziona solo gli Italiani
 		da = aprs_data.get('from') 
+		# Solo se sei italiano (Il call inizia con "I")
 		regex = re.compile('^I')
 		if re.match(regex, da):
 			logger.info('###################')
@@ -125,10 +126,13 @@ class APRSMessage(object):
 		else:
         		#connection to DAPNET has been established, continue
 			logger.info('-------------------------------------------')
-			logger.info('MESSAGGIO INVIATO')
+			logger.info('MESSAGGIO INVIATO SU DAPNET')
 			logger.info('-------------------------------------------')
-        		#dapnetdata = json.loads(response.data.decode('utf-8'))
+                        #notifico via APRS a chi lo ha mandato
+		        AIS.sendall('POCGAT-1>APOCSG,TCPIP*:>' + da + ' :messaggio inviato a ' + to + '')	
 
+
+		
 		# Invio messaggio -> DAPNET con l'uso di bash
 		#import subprocess	               	
 		#invio = ['./send_dapnet_api.sh', aprs_data.get('from'), to, messaggio]

@@ -34,7 +34,7 @@ import sys
 import configparser
 import os
 import requests
-#from requests.auth import OAuth1
+from random import randint
 
 # Leggo il file di configurazione
 cfg = configparser.RawConfigParser()
@@ -129,16 +129,25 @@ class APRSMessage(object):
 			logger.info('MESSAGGIO INVIATO SU DAPNET')
 			logger.info('-------------------------------------------')
                         #notifico via APRS a chi lo ha mandato
-		        AIS.sendall('POCGAT-1>APOCSG,TCPIP*:>' + da + ' :messaggio inviato a ' + to + '')	
+			# ATTENZIONE il nominativo tra due :: deve essere sempre 8 caratteri + uno spazio
+			lunghezza = len(da)
+			if lunghezza == 5:
+        			spazio = "    "
+			elif lunghezza == 6:
+        			spazio = "   "
+			elif lunghezza == 7:
+        			spazio = "  "
+			elif lunghezza == 8:
+				spazio = " "
+			else:
+         			spazio = ""
+			# ATTENZIONE creazione numero random da mettere dopo le parentesi graffe
+			rand = str(randint(0, 9))
+		        # Creazione del messaggio di risposta ed invio	
+		        AIS.sendall('POCGAT>APOCSG::' + da + spazio + ':messaggio inviato a ' + to + ' {' + rand + '')	
 
 
 		
-		# Invio messaggio -> DAPNET con l'uso di bash
-		#import subprocess	               	
-		#invio = ['./send_dapnet_api.sh', aprs_data.get('from'), to, messaggio]
-		#subprocess.Popen(invio)
-		#
-
 
 # send_dapnet_api.sh FROM TO test debug
  

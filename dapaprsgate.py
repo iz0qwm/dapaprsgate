@@ -24,6 +24,7 @@ from datetime import datetime
 from aprslib.packets.base import APRSPacket
 from aprslib.util import latitude_to_ddm, longitude_to_ddm, comment_altitude
 import urllib2
+import urllib3
 import json
 import base64
 import math
@@ -32,6 +33,8 @@ import re
 import sys
 import configparser
 import os
+import requests
+#from requests.auth import OAuth1
 
 # Leggo il file di configurazione
 cfg = configparser.RawConfigParser()
@@ -55,7 +58,7 @@ logger.setLevel(logging.INFO)
 # Leggo le credenziali per DAPNET 
 hampagerusername = cfg.get('user','username')
 hampagerpassword = cfg.get('user','password')
-hampagerurl = cfg.get('dapnet','baseurl') + cfg.get('dapnet','trxurl')
+hampagerurl = cfg.get('dapnet','baseurl') + cfg.get('dapnet','coreurl')
 
 # Leggo le credenzialie per APRS-IS
 aprsisusername = cfg.get('aprsis','username')
@@ -101,10 +104,37 @@ class APRSMessage(object):
 		to,messaggio = messaggio_completo.split('@')
 		logger.info('To: %s', to)
 		logger.info('Messaggio: %s', messaggio)
-		import subprocess	               	
-		invio = ['./send_dapnet_api.sh', aprs_data.get('from'), to, messaggio]
-		subprocess.Popen(invio)
-		logger.info('-------------------------------------------')
+
+		# Invio messaggio -> DAPNET
+        	#create the complete URL to send to DAPNET
+        	http = urllib3.PoolManager()
+        	headers = urllib3.util.make_headers(basic_auth= hampagerusername + ':' + hampagerpassword)
+		#headers = {'content-type': 'application/json'}
+		da = aprs_data.get('from') 
+		payload = '{ "text": "'+ da +': ' + messaggio +'", "callSignNames": [ "' + to + '" ], "transmitterGroupNames": [ "italia" ], "emergency": false}' 
+		#print(headers)
+		#print(payload)
+
+		try:
+        		#try to establish connection to DAPNET
+        		response = requests.post(hampagerurl, headers=headers, data=payload)
+		except:
+        		#connection to DAPNET failed, write warning to console, write warning to error log then bail out
+        		logger.error('Invalid DAPNET credentials or payload not well done')
+        		sys.exit(0)
+		else:
+        		#connection to DAPNET has been established, continue
+			logger.info('-------------------------------------------')
+			logger.info('MESSAGGIO INVIATO')
+			logger.info('-------------------------------------------')
+        		#dapnetdata = json.loads(response.data.decode('utf-8'))
+
+		# Invio messaggio -> DAPNET con l'uso di bash
+		#import subprocess	               	
+		#invio = ['./send_dapnet_api.sh', aprs_data.get('from'), to, messaggio]
+		#subprocess.Popen(invio)
+		#
+
 
 # send_dapnet_api.sh FROM TO test debug
  
@@ -121,6 +151,7 @@ am = APRSMessage()
 at = threading.Timer(10.0, am.message_timer)
 at.start()
 
+# Mi collego a APRS-IS
 AIS = aprslib.IS(aprsisusername, passwd=aprsispassword, host=aprsishost, port=10152)
 try:
         AIS.connect()

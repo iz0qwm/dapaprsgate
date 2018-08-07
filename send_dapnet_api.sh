@@ -15,7 +15,7 @@ if [ "$(id -u)" != "0" ]; then
 fi
 
 # Get the stored DAPNET API Config
-DAPNETAPIFile=/opt/dapnet/DAPNETAPRS/dapnetapi.key
+DAPNETAPIFile=/opt/dapnet/dapaprsgate/dapnetapi.key
 if [ -f ${DAPNETAPIFile} ]; then
         USER=$(grep -m 1 'USER=' ${DAPNETAPIFile} | awk -F "=" '/USER/ {print $2}')
         PASS=$(grep -m 1 'PASS=' ${DAPNETAPIFile} | awk -F "=" '/PASS/ {print $2}')

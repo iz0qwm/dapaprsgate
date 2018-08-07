@@ -13,7 +13,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # Author: Raffaello Di Martino IZ0QWM starting from the work of DH3WR and PE2KMV
-# Date: 07.08.2018
+# Date: 06.08.2018
 # Version 0.1
 
 import aprslib

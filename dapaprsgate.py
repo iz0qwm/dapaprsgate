@@ -12,7 +12,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Author: Raffaello Di Martino IZ0QWM
+# Author: Raffaello Di Martino IZ0QWM starting from the work of DH3WR and PE2KMV
 # Date: 07.08.2018
 # Version 0.1
 
@@ -29,6 +29,20 @@ import base64
 import math
 import threading
 import re
+import sys
+import configparser
+import os
+
+# Leggo il file di configurazione
+cfg = configparser.RawConfigParser()
+try:
+        #attempt to read the config file config.cfg
+        config_file = os.path.join(os.path.dirname(__file__),'dapaprsgate.cfg')
+        cfg.read(config_file)
+except:
+        #no luck reading the config file, write error and bail out
+        logger.error('dapaprsgate could not find / read config file')
+        sys.exit(0)
 
 #logging.basicConfig(filename='dapaprsgate.log',level=logging.INFO) # level=10
 logger = logging.getLogger('dapnet')
@@ -38,15 +52,16 @@ handler.setFormatter(logformat)
 logger.addHandler(handler)
 logger.setLevel(logging.INFO)
 
-hampagerusername = 'iz0qwm'
-hampagerpassword = 'pgypCtu9JpjHCKRej1HX'
-hampagerurl = "http://www.dapnet-italia.it:8080/transmitters"
+# Leggo le credenziali per DAPNET 
+hampagerusername = cfg.get('user','username')
+hampagerpassword = cfg.get('user','password')
+hampagerurl = cfg.get('dapnet','baseurl') + cfg.get('dapnet','trxurl')
 
-#aprsisusername = 'IR0UCA'
-aprsisusername = 'POCGAT-1'
-aprsispassword = '8638'
-aprsissourcecallsign = 'IR0UCA-14'
-host = 'localhost'
+# Leggo le credenzialie per APRS-IS
+aprsisusername = cfg.get('aprsis','username')
+aprsispassword = cfg.get('aprsis','password')
+aprsissourcecallsign = cfg.get('aprsis','sourcecall')
+aprsishost = cfg.get('aprsis','host')
 
 class APRSMessage(object):
     def __init__(self):
@@ -106,8 +121,16 @@ am = APRSMessage()
 at = threading.Timer(10.0, am.message_timer)
 at.start()
 
-AIS = aprslib.IS(aprsisusername, passwd=aprsispassword, host=host, port=10152)
-AIS.connect()
+AIS = aprslib.IS(aprsisusername, passwd=aprsispassword, host=aprsishost, port=10152)
+try:
+        AIS.connect()
+except:
+        logger.error('Invalid APRS credentials')
+        sys.exit(0)
+else:
+        #connection to APRS-IS has been established, now continue
+	logger.info('Connesso al server APRS-IS: %s', aprsishost)
+
 
 #AIS.consumer(callback, raw=False)
 AIS.consumer(callback=am.set_message, raw=True)

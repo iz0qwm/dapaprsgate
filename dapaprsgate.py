@@ -120,7 +120,7 @@ class APRSMessage(object):
                         	# ATTENZIONE creazione numero random da mettere dopo le parentesi graffe
                         	rand = str(randint(0, 9))
                         	# Creazione del messaggio di risposta ed invio
-                        	AIS.sendall('POCGAT-1>APOCSG::' + da + spazio + ':POCSAT GATEWAY: usa CALL@testo messaggio - http://www.dapnet-italia.it {' + rand + '')
+                        	AIS.sendall('POCGAT-1>APOCSG::' + da + spazio + ':POCSAT GATEWAY: usa CALL@testo messaggio - www.dapnet-italia.it {' + rand + '')
 				logger.info('-------------------------------------------')
 
 		else:

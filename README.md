@@ -19,8 +19,12 @@ Per istruzioni via APRS inviare un messaggio a POCGAT-1 con ?
 Es.  
 ```
        TO: POCGAT-1  
-       Test: ?  
+       Testo: ?  
 ```
+Si riceverà una risposta con:  
+```
+	POCSAT GATEWAY: usa CALL@testo messaggio - www.dapnet-italia.it  
+```	
   
 Messaggi da DAPNET -> APRS
 --------------------------

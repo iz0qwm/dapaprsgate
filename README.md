@@ -8,7 +8,7 @@ Messaggi da APRS -> DAPNET
 Inviare un messaggio a POCGAT-1<br/>
 Nel testo scrivere  DESTINATARIO@testo del messaggio  
   
-Es.<br\>
+Es.<br/>
 ```
        TO: POCGAT-1  
        Testo: IZ0QWM@Questo è un messaggio per IZ0QWM  

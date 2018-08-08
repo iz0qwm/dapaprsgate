@@ -94,62 +94,89 @@ class APRSMessage(object):
 #
 	if message.find("POCGAT-1") == -1:
                 pass
-        else:
-		logger.info('-------------------------------------------')
-		logger.info(' MESSAGGIO APRS ----> DAPNET ')
-		logger.info('-------------------------------------------')
-       		logger.debug('Received message: %s', message)
-                logger.info('From: %s', aprs_data.get('from'))
-	        logger.debug('Testo completo: %s', aprs_data.get('message_text'))
-		messaggio_completo = aprs_data.get('message_text')
-		to,messaggio = messaggio_completo.split('@')
-		logger.info('To: %s', to)
-		logger.info('Messaggio: %s', messaggio)
-
-		# Invio messaggio -> DAPNET
-        	#create the complete URL to send to DAPNET
-        	http = urllib3.PoolManager()
-        	headers = urllib3.util.make_headers(basic_auth= hampagerusername + ':' + hampagerpassword)
-		#headers = {'content-type': 'application/json'}
-		da = aprs_data.get('from') 
-		payload = '{ "text": "'+ da +': ' + messaggio +'", "callSignNames": [ "' + to + '" ], "transmitterGroupNames": [ "italia" ], "emergency": false}' 
-		#print(headers)
-		#print(payload)
-
-		try:
-        		#try to establish connection to DAPNET
-        		response = requests.post(hampagerurl, headers=headers, data=payload)
-		except:
-        		#connection to DAPNET failed, write warning to console, write warning to error log then bail out
-        		logger.error('Invalid DAPNET credentials or payload not well done')
-        		sys.exit(0)
-		else:
-        		#connection to DAPNET has been established, continue
-			logger.info('-------------------------------------------')
-			logger.info('MESSAGGIO INVIATO SU DAPNET')
-			logger.info('-------------------------------------------')
-                        #notifico via APRS a chi lo ha mandato
-			# ATTENZIONE il nominativo tra due :: deve essere sempre 8 caratteri + uno spazio
-			lunghezza = len(da)
-			if lunghezza == 5:
-        			spazio = "    "
-			elif lunghezza == 6:
-        			spazio = "   "
-			elif lunghezza == 7:
-        			spazio = "  "
-			elif lunghezza == 8:
-				spazio = " "
+        else: 
+		if message.find("@") == -1:
+			if message.find("?") == -1:
+				pass
 			else:
-         			spazio = ""
-			# ATTENZIONE creazione numero random da mettere dopo le parentesi graffe
-			rand = str(randint(0, 9))
-		        # Creazione del messaggio di risposta ed invio	
-		        AIS.sendall('POCGAT>APOCSG::' + da + spazio + ':messaggio inviato a ' + to + ' {' + rand + '')	
+				logger.info('-------------------------------------------')
+				logger.info(' MESSAGGIO APRS ISTRUZIONI ')
+				logger.info('-------------------------------------------')
+                		logger.info('From: %s', aprs_data.get('from'))
+				da = aprs_data.get('from') 
+                        	#notifico via APRS a chi lo ha mandato
+                        	# ATTENZIONE il nominativo tra due :: deve essere sempre 8 caratteri + uno spazio
+                        	lunghezza = len(da)
+                        	if lunghezza == 5:
+                        		spazio = "    "
+                        	elif lunghezza == 6:
+                                	spazio = "   "
+                        	elif lunghezza == 7:
+                                	spazio = "  "
+                        	elif lunghezza == 8:
+                                	spazio = " "
+                        	else:
+                                	spazio = ""
+                        	# ATTENZIONE creazione numero random da mettere dopo le parentesi graffe
+                        	rand = str(randint(0, 9))
+                        	# Creazione del messaggio di risposta ed invio
+                        	AIS.sendall('POCGAT-1>APOCSG::' + da + spazio + ':POCSAT GATEWAY: usa CALL@testo messaggio - http://www.dapnet-italia.it {' + rand + '')
+				logger.info('-------------------------------------------')
+
+		else:
+			logger.info('-------------------------------------------')
+			logger.info(' MESSAGGIO APRS ----> DAPNET ')
+			logger.info('-------------------------------------------')
+       			logger.debug('Received message: %s', message)
+                	logger.info('From: %s', aprs_data.get('from'))
+	        	logger.debug('Testo completo: %s', aprs_data.get('message_text'))
+			messaggio_completo = aprs_data.get('message_text')
+			to,messaggio = messaggio_completo.split('@')
+			logger.info('To: %s', to)
+			logger.info('Messaggio: %s', messaggio)
+
+			# Invio messaggio -> DAPNET
+        		#create the complete URL to send to DAPNET
+        		http = urllib3.PoolManager()
+        		headers = urllib3.util.make_headers(basic_auth= hampagerusername + ':' + hampagerpassword)
+			da = aprs_data.get('from') 
+			payload = '{ "text": "'+ da +': ' + messaggio +'", "callSignNames": [ "' + to + '" ], "transmitterGroupNames": [ "italia" ], "emergency": false}' 
+			#print(headers)
+			#print(payload)
+
+			try:
+        			#try to establish connection to DAPNET
+        			response = requests.post(hampagerurl, headers=headers, data=payload)
+			except:
+        			#connection to DAPNET failed, write warning to console, write warning to error log then bail out
+        			logger.error('Invalid DAPNET credentials or payload not well done')
+        			sys.exit(0)
+			else:
+        			#connection to DAPNET has been established, continue
+				logger.info('-------------------------------------------')
+				logger.info('MESSAGGIO INVIATO SU DAPNET')
+				logger.info('-------------------------------------------')
+                        	#notifico via APRS a chi lo ha mandato
+				# ATTENZIONE il nominativo tra due :: deve essere sempre 8 caratteri + uno spazio
+				lunghezza = len(da)
+				if lunghezza == 5:
+        				spazio = "    "
+				elif lunghezza == 6:
+        				spazio = "   "
+				elif lunghezza == 7:
+        				spazio = "  "
+				elif lunghezza == 8:
+					spazio = " "
+				else:
+         				spazio = ""
+				# ATTENZIONE creazione numero random da mettere dopo le parentesi graffe
+				rand = str(randint(0, 9))
+		        	# Creazione del messaggio di risposta ed invio	
+		        	AIS.sendall('POCGAT-1>APOCSG::' + da + spazio + ':messaggio inviato a ' + to + ' {' + rand + '')	
 
 
 		
 
-# send_dapnet_api.sh FROM TO test debug
  
     def message_timer(self):
         if self.message is None:

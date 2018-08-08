@@ -66,7 +66,7 @@ aprsispassword = cfg.get('aprsis','password')
 aprsissourcecallsign = cfg.get('aprsis','sourcecall')
 aprsishost = cfg.get('aprsis','host')
 
-listaCall = []
+listaCall = set("")
 
 class APRSMessage(object):
     def __init__(self):
@@ -90,7 +90,8 @@ class APRSMessage(object):
        			logger.debug('Received message: %s', message)
 			logger.info('Attivo: %s', aprs_data.get('from'))
 			logger.info('###################')
-			listaCall.insert( 1, aprs_data.get('from'))
+
+			listaCall.add(aprs_data.get('from'))
 			print "Lista calls : ", listaCall
 
 #

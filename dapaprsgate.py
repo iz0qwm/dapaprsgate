@@ -91,8 +91,9 @@ class APRSMessage(object):
 			logger.info('Attivo: %s', aprs_data.get('from'))
 			logger.info('###################')
 
+			# Inserisci nominativo nella lista dei reperibili
 			listaCall.add(aprs_data.get('from'))
-			print "Lista calls : ", listaCall
+			#print "Lista calls : % " % listaCall
 
 #
 # Invio messaggio su DAPNET se inviato a POCGAT-1

@@ -6,6 +6,16 @@ import re
 import sys
 import os
 import requests
+import logging
+
+#logging.basicConfig(filename='dapaprsgate.log',level=logging.INFO) # level=10
+logger = logging.getLogger('dapnet')
+handler = logging.FileHandler('dapaprsgate.log')
+logformat = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
+handler.setFormatter(logformat)
+logger.addHandler(handler)
+logger.setLevel(logging.INFO)
+
 
 try:
     import thread
@@ -39,7 +49,8 @@ def on_message(ws, message):
                 			clean1_call = call.replace(" \"", "")
                 			clean2_call = clean1_call.replace("\",","")
 					clean2_call_upper = clean2_call.upper()
-			print("RIC: %s - Destinatario: %s - Messaggio: %s" % (destinatario, clean2_call_upper, clean2_messaggio))
+			#print("RIC: %s - Destinatario: %s - Messaggio: %s" % (destinatario, clean2_call_upper, clean2_messaggio))
+			logger.info("RIC: %s - Destinatario: %s - Messaggio: %s" , destinatario, clean2_call_upper, clean2_messaggio)
 
 
 def on_error(ws, error):

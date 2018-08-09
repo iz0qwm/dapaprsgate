@@ -199,14 +199,14 @@ class APRSMessage(object):
 		        	# Creazione del messaggio di risposta ed invio	
 		        	AIS.sendall('POCGAT-1>APOCSG::' + da + spazio + ':messaggio inviato a ' + to + ' {' + rand + '')	
 
-def cancello_aprspresencefile():
-    open(aprspresencefile, 'w').close()
+	def cancello_aprspresencefile():
+    	open(aprspresencefile, 'w').close()
 
-def cancello_sometimes():
-    print "Cancello il file presenze"
-    Timer(20, cancello_aprspresencefile, ()).start()
+	def cancello_sometimes():
+    	print "Cancello il file presenze"
+    	Timer(20, cancello_aprspresencefile, ()).start()
 
-cancello_sometimes()
+	cancello_sometimes()
 
     def message_timer(self):
         if self.message is None:

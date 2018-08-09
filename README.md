@@ -27,8 +27,8 @@ Si riceverà una risposta con:
 ```
 
 Se su APRS vuoi ricevere messaggi dal DAPNET devi:  
-*1)* essere registrato anche su DAPNET (con RIC)  
-*2)* Scrivere nel messaggio di stato la parola POCGAT  
+*1.* essere registrato anche su DAPNET (con RIC)  
+*2.* Scrivere nel messaggio di stato la parola POCGAT  
 Es. Raffaello www.kwos.it su DACIA DUSTER - POCGAT
   
 Messaggi da DAPNET -> APRS
@@ -44,6 +44,6 @@ Es.
   ALL
 ```
 In questo modo il messaggio sarà destinato a IU7IGU sia su rete DAPNET che su APRS.  
-Sempre che IU7IGU abbia soddisfatto i punti *1)* e *2)*  
+Sempre che IU7IGU abbia soddisfatto i punti *1* e *2*  
 
  

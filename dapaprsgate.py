@@ -68,9 +68,7 @@ aprsisusername = cfg.get('aprsis','username')
 aprsispassword = cfg.get('aprsis','password')
 aprsissourcecallsign = cfg.get('aprsis','sourcecall')
 aprsishost = cfg.get('aprsis','host')
-
-listaCall = set("")
-
+aprspresencefile = cfg.get('aprsis','presencefile')
 
 
 class APRSMessage(object):
@@ -80,7 +78,7 @@ class APRSMessage(object):
     def set_message(self, message):
         self.message = message
 	aprs_data = aprslib.parse(message)
-	if message.find("POCSAG") == -1:
+	if message.find("POCGAT") == -1:
 		pass
 		#print "--------- %s" % message
 	else:
@@ -97,8 +95,20 @@ class APRSMessage(object):
 			logger.info('###################')
 
 			# Inserisci nominativo nella lista dei reperibili
-			listaCall.add(aprs_data.get('from'))
-			#print "Lista calls : % " % listaCall
+			call_attivo = aprs_data.get('from')
+			if os.path.exists(aprspresencefile):
+    				append_write = 'a+' # append if already exists
+			else:
+    				append_write = 'w+' # make a new file if not
+			fileaprs = open(aprspresencefile,append_write)
+
+			lettura = fileaprs.read()
+			search_call = call_attivo
+			if (search_call in lettura):
+				pass
+			else:
+				fileaprs.write(call_attivo + '\n')
+			fileaprs.close()
 
 #
 # Invio messaggio su DAPNET se inviato a POCGAT-1

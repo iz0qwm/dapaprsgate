@@ -1,0 +1,13 @@
+[Unit]
+Description=DAPNET <-> APRS Gateway
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/opt/dapnet/dapaprsgate/dapaprsgate.py &
+WorkingDirectory=/opt/dapnet/dapaprsgate/
+User=root
+
+[Install]
+WantedBy=multi-user.target
+

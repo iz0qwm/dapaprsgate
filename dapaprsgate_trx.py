@@ -71,11 +71,10 @@ def on_message(ws, message):
 					clean2_call_upper = clean2_call.upper()
 			#print("RIC: %s - Destinatario: %s - Messaggio: %s" % (destinatario, clean2_call_upper, clean2_messaggio))
         if clean2_messaggio.find("POCGAT") == -1:
-            logger.info('-------------------------------------------')
+            #logger.info('-------------------------------------------')
             logger.info("RIC: %s - Destinatario: %s - Messaggio: %s", destinatario, clean2_call_upper, clean2_messaggio)
             logger.info("Messaggio solo per rete POCSAG")
-            logger.info('-------------------------------------------')
-            # print "--------- %s" % message
+            #logger.info('-------------------------------------------')
         else:
             logger.info('-------------------------------------------')
             logger.info(' MESSAGGIO DAPNET ----> APRS ')
@@ -89,7 +88,7 @@ def on_message(ws, message):
                     logger.info('MESSAGGIO INVIATO SU APRS')
                     logger.info('-------------------------------------------')
             logger.info("Destinatario %s NON trovato", clean2_call_upper)
-            #logger.info('-------------------------------------------')
+            logger.info('-------------------------------------------')
 
 
 def on_error(ws, error):

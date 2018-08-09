@@ -80,10 +80,8 @@ def on_message(ws, message):
             logger.info(' MESSAGGIO DAPNET ----> APRS ')
             logger.info('-------------------------------------------')
             #
-            logger.info("RIC: %s - Destinatario: %s - Messaggio: %s" , destinatario, clean2_call_upper, clean2_messaggio)
-            fileaprs = open(aprspresencefile, 'r')
-            lettura = fileaprs.read()
-            for line in lettura:
+            logger.info("RIC: %s - Destinatario: %s - Messaggio: %s", destinatario, clean2_call_upper, clean2_messaggio)
+            for line in file(aprspresencefile, "r"):
                 if clean2_call_upper in line:
                     logger.info("Destinatario %s trovato", clean2_call_upper)
                     logger.info('-------------------------------------------')

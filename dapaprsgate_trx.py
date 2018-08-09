@@ -70,9 +70,9 @@ def on_message(ws, message):
                 			clean2_call = clean1_call.replace("\",","")
 					clean2_call_upper = clean2_call.upper()
 			#print("RIC: %s - Destinatario: %s - Messaggio: %s" % (destinatario, clean2_call_upper, clean2_messaggio))
-            logger.info("RIC: %s - Destinatario: %s - Messaggio: %s" , destinatario, clean2_call_upper, clean2_messaggio)
             if message.find("POCGAT") == -1:
                 #pass
+                logger.info("RIC: %s - Destinatario: %s - Messaggio: %s" , destinatario, clean2_call_upper, clean2_messaggio)
                 logger.info("Messaggio solo per rete POCSAG")
             # print "--------- %s" % message
             else:
@@ -80,6 +80,7 @@ def on_message(ws, message):
             logger.info(' MESSAGGIO DAPNET ----> APRS ')
             logger.info('-------------------------------------------')
             #
+            logger.info("RIC: %s - Destinatario: %s - Messaggio: %s" , destinatario, clean2_call_upper, clean2_messaggio)
             fileaprs = open(aprspresencefile, 'r')
             lettura = fileaprs.read()
             for line in lettura

@@ -71,7 +71,6 @@ def on_message(ws, message):
 					clean2_call_upper = clean2_call.upper()
 			#print("RIC: %s - Destinatario: %s - Messaggio: %s" % (destinatario, clean2_call_upper, clean2_messaggio))
         if clean2_messaggio.find("POCGAT") == -1:
-                #pass
             logger.info('-------------------------------------------')
             logger.info("RIC: %s - Destinatario: %s - Messaggio: %s" , destinatario, clean2_call_upper, clean2_messaggio)
             logger.info("Messaggio solo per rete POCSAG")

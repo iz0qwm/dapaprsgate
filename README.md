@@ -24,9 +24,26 @@ Es.
 Si riceverà una risposta con:  
 ```
 	POCSAT GATEWAY: usa CALL@testo messaggio - www.dapnet-italia.it  
-```	
+```
+
+Se su APRS vuoi ricevere messaggi dal DAPNET devi:  
+*1)* essere registrato anche su DAPNET (con RIC)  
+*2)* Scrivere nel messaggio di stato la parola POCGAT  
+Es. Raffaello www.kwos.it su DACIA DUSTER - POCGAT
   
 Messaggi da DAPNET -> APRS
 --------------------------
 
-  
+Inviare un messaggio ma avere l'accortezza di scrivere al termine
+la parola *POCGAT*
+
+Es.  
+```
+  IZ0QWM: Messaggio da inviare anche in aprs - POCGAT
+  IU7IGU
+  ALL
+```
+In questo modo il messaggio sarà destinato a IU7IGU sia su rete DAPNET che su APRS.  
+Sempre che IU7IGU abbia soddisfatto i punti *1)* e *2)*  
+
+ 

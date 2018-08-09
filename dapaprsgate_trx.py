@@ -7,6 +7,18 @@ import sys
 import os
 import requests
 import logging
+import configparser
+
+# Leggo il file di configurazione
+cfg = configparser.RawConfigParser()
+try:
+        #attempt to read the config file config.cfg
+        config_file = os.path.join(os.path.dirname(__file__),'dapaprsgate.cfg')
+        cfg.read(config_file)
+except:
+        #no luck reading the config file, write error and bail out
+        logger.error('dapaprsgate could not find / read config file')
+        sys.exit(0)
 
 #logging.basicConfig(filename='dapaprsgate.log',level=logging.INFO) # level=10
 logger = logging.getLogger('dapnet')
@@ -16,6 +28,13 @@ handler.setFormatter(logformat)
 logger.addHandler(handler)
 logger.setLevel(logging.INFO)
 
+# Leggo le informazioni per DAPNET
+statefile = cfg.get('dapnet','statefile')
+transmitterws = cfg.get('dapnet','transmitterws')
+# Leggo le credenzialie per APRS-IS
+aprsisusername = cfg.get('aprsis','username')
+aprsispassword = cfg.get('aprsis','password')
+aprsishost = cfg.get('aprsis','host')
 
 try:
     import thread
@@ -40,7 +59,7 @@ def on_message(ws, message):
 			pass
 		else:
 			ric = str(destinatario)
-			file_config = open('/opt/dapnet/Core/local/data/State.json',"r").readlines()
+			file_config = open(statefile,"r").readlines()
 			for i in range(len(file_config)):
         			if file_config[i].startswith(ric, 20):
                 			prima = file_config[i-6]
@@ -50,7 +69,14 @@ def on_message(ws, message):
                 			clean2_call = clean1_call.replace("\",","")
 					clean2_call_upper = clean2_call.upper()
 			#print("RIC: %s - Destinatario: %s - Messaggio: %s" % (destinatario, clean2_call_upper, clean2_messaggio))
+            logger.info('-------------------------------------------')
+            logger.info(' MESSAGGIO DAPNET ----> APRS ')
+            logger.info('-------------------------------------------')
 			logger.info("RIC: %s - Destinatario: %s - Messaggio: %s" , destinatario, clean2_call_upper, clean2_messaggio)
+            #
+            logger.info('-------------------------------------------')
+            logger.info('MESSAGGIO INVIATO SU APRS')
+            logger.info('-------------------------------------------')
 
 
 def on_error(ws, error):
@@ -74,7 +100,7 @@ def on_open(ws):
 
 if __name__ == "__main__":
     #websocket.enableTrace(True)
-    ws = websocket.WebSocketApp("ws://localhost:8055/",
+    ws = websocket.WebSocketApp(transmitterws,
                               on_message = on_message,
                               on_error = on_error,
                               on_close = on_close)

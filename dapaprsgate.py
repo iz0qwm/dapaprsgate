@@ -75,7 +75,41 @@ aprspresencefile = cfg.get('aprsis','presencefile')
 # Svuoto il file delle presenze
 open(aprspresencefile, 'w').close()
 
+class RepeatedTimer(object):
+    def __init__(self, interval, function, *args, **kwargs):
+        self._timer     = None
+        self.interval   = interval
+        self.function   = function
+        self.args       = args
+        self.kwargs     = kwargs
+        self.is_running = False
+        self.start()
+
+    def _run(self):
+        self.is_running = False
+        self.start()
+        self.function(*self.args, **self.kwargs)
+
+    def start(self):
+        if not self.is_running:
+            self._timer = Timer(self.interval, self._run)
+            self._timer.start()
+            self.is_running = True
+
+    def stop(self):
+        self._timer.cancel()
+        self.is_running = False
+
 class APRSMessage(object):
+
+    def cancello_sometimes():
+        logger.info("Cancello il file presenze")
+        open(aprspresencefile, 'w').close()
+	time.sleep(1)
+
+    # Cancello il file delle presenze su APRS ogni 5 minuti
+    rt = RepeatedTimer(320, cancello_sometimes)
+
     def __init__(self):
         self.message = None
  
@@ -199,21 +233,13 @@ class APRSMessage(object):
 		        	# Creazione del messaggio di risposta ed invio	
 		        	AIS.sendall('POCGAT-1>APOCSG::' + da + spazio + ':messaggio inviato a ' + to + ' {' + rand + '')	
 
-	def cancello_aprspresencefile():
-    	open(aprspresencefile, 'w').close()
 
-	def cancello_sometimes():
-    	print "Cancello il file presenze"
-    	Timer(20, cancello_aprspresencefile, ()).start()
-
-	cancello_sometimes()
 
     def message_timer(self):
         if self.message is None:
             logger.debug('No message received!')
         else:
             self.message = None
-
 
 am = APRSMessage()
 #at = threading.Timer(10.0, am.message_timer)
@@ -228,10 +254,9 @@ except:
         sys.exit(0)
 else:
         #connection to APRS-IS has been established, now continue
-	    logger.info('Connesso al server APRS-IS: %s', aprsishost)
+        logger.info('Connesso al server APRS-IS: %s', aprsishost)
 
 
-#AIS.consumer(callback, raw=False)
 AIS.consumer(callback=am.set_message, raw=True)
 
 

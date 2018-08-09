@@ -84,12 +84,12 @@ def on_message(ws, message):
             fileaprs = open(aprspresencefile, 'r')
             lettura = fileaprs.read()
             for line in lettura:
-                if destinatario in line:
-                    logger.info("Destinatario %s trovato", destinatario)
+                if clean2_call_upper in line:
+                    logger.info("Destinatario %s trovato", clean2_call_upper)
                     logger.info('-------------------------------------------')
                     logger.info('MESSAGGIO INVIATO SU APRS')
                     logger.info('-------------------------------------------')
-            logger.info("Destinatario %s NON trovato", destinatario)
+            logger.info("Destinatario %s NON trovato", clean2_call_upper)
 
 
 

@@ -8,6 +8,7 @@ import os
 import requests
 import logging
 import configparser
+from random import randint
 
 # Leggo il file di configurazione
 cfg = configparser.RawConfigParser()
@@ -84,6 +85,24 @@ def on_message(ws, message):
             for line in file(aprspresencefile, "r"):
                 if clean2_call_upper in line:
                     logger.info("Destinatario %s trovato nella lista: %s", clean2_call_upper, line)
+                    AIS = aprslib.IS(aprsisusername, passwd=aprsispassword, host=aprsishost, port=10152)
+                    AIS.connect()
+                    # ATTENZIONE il nominativo tra due :: deve essere sempre 8 caratteri + uno spazio
+                    lunghezza = len(line)
+                    if lunghezza == 5:
+                        spazio = "    "
+                    elif lunghezza == 6:
+                        spazio = "   "
+                    elif lunghezza == 7:
+                        spazio = "  "
+                    elif lunghezza == 8:
+                        spazio = " "
+                    else:
+                        spazio = ""
+                    # ATTENZIONE creazione numero random da mettere dopo le parentesi graffe
+                    rand = str(randint(0, 9))
+                    # Creazione del messaggio di risposta ed invio
+                    AIS.sendall('POCGAT-1>APOCSG::' + line + spazio + ': ' + clean2_messaggio + ' {' + rand + '')
                     logger.info('-------------------------------------------')
                     logger.info('MESSAGGIO INVIATO SU APRS')
                     logger.info('-------------------------------------------')

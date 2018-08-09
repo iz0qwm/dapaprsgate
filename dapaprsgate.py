@@ -215,7 +215,7 @@ class APRSMessage(object):
 				logger.info('-------------------------------------------')
 				logger.info('MESSAGGIO INVIATO SU DAPNET')
 				logger.info('-------------------------------------------')
-                        	#notifico via APRS a chi lo ha mandato
+                #notifico via APRS a chi lo ha mandato
 				# ATTENZIONE il nominativo tra due :: deve essere sempre 8 caratteri + uno spazio
 				lunghezza = len(da)
 				if lunghezza == 5:

@@ -70,6 +70,7 @@ aprsisusername = cfg.get('aprsis','username')
 aprsispassword = cfg.get('aprsis','password')
 aprsissourcecallsign = cfg.get('aprsis','sourcecall')
 aprsishost = cfg.get('aprsis','host')
+aprsisport = cfg.get('aprsis','port')
 aprspresencefile = cfg.get('aprsis','presencefile')
 
 # Svuoto il file delle presenze
@@ -246,7 +247,7 @@ am = APRSMessage()
 #at.start()
 
 # Mi collego a APRS-IS
-AIS = aprslib.IS(aprsisusername, passwd=aprsispassword, host=aprsishost, port=10152)
+AIS = aprslib.IS(aprsisusername, passwd=aprsispassword, host=aprsishost, port=int(aprsisport))
 try:
         AIS.connect()
 except:

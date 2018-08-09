@@ -36,7 +36,8 @@ transmitterws = cfg.get('dapnet','transmitterws')
 # Leggo le credenzialie per APRS-IS
 aprsisusername = cfg.get('aprsis','username')
 aprsispassword = cfg.get('aprsis','password')
-aprsishost = cfg.get('aprsis','host')
+aprsishost = cfg.get('aprsis','host1')
+aprsisport = cfg.get('aprsis','port1')
 aprspresencefile = cfg.get('aprsis','presencefile')
 
 try:
@@ -84,12 +85,13 @@ def on_message(ws, message):
             #
             logger.info("RIC: %s - Destinatario: %s - Messaggio: %s", destinatario, clean2_call_upper, clean2_messaggio)
             for line in file(aprspresencefile, "r"):
-                if clean2_call_upper in line:
-                    logger.info("Destinatario %s trovato nella lista: %s", clean2_call_upper, line)
-                    AIS = aprslib.IS(aprsisusername, passwd=aprsispassword, host=aprsishost, port=10152)
+		line_strip = line.rstrip()
+                if clean2_call_upper in line_strip:
+                    logger.info("Destinatario %s trovato nella lista: %s", clean2_call_upper, line_strip)
+                    AIS = aprslib.IS(aprsisusername, passwd=aprsispassword, host=aprsishost, port=int(aprsisport))
                     AIS.connect()
                     # ATTENZIONE il nominativo tra due :: deve essere sempre 8 caratteri + uno spazio
-                    lunghezza = len(line)
+                    lunghezza = len(line_strip)
                     if lunghezza == 5:
                         spazio = "    "
                     elif lunghezza == 6:
@@ -103,8 +105,8 @@ def on_message(ws, message):
                     # ATTENZIONE creazione numero random da mettere dopo le parentesi graffe
                     rand = str(randint(0, 9))
                     # Creazione del messaggio di risposta ed invio
-                    AIS.sendall('POCGAT-1>APOCSG::' + line + spazio + ': ' + clean2_messaggio + ' {' + rand + '')
-                    logger.info('POCGAT-1>APOCSG:: %s %s :%s {%s', line, spazio, clean2_messaggio, rand)
+                    AIS.sendall('POCGAT-1>APOCSG::' + line_strip + spazio + ': ' + clean2_messaggio + ' {' + rand + '')
+                    # logger.info('POCGAT-1>APOCSG:: %s %s :%s {%s', line_strip, spazio, clean2_messaggio, rand)
                     logger.info('-------------------------------------------')
                     logger.info('MESSAGGIO INVIATO SU APRS')
                     logger.info('-------------------------------------------')

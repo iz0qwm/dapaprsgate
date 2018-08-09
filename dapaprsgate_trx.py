@@ -86,11 +86,11 @@ def on_message(ws, message):
             for line in lettura:
                 if destinatario in line:
                     logger.info("Destinatario %s trovato", destinatario)
-            logger.info("Destinatario $s NON trovato", destinatario)
+                    logger.info('-------------------------------------------')
+                    logger.info('MESSAGGIO INVIATO SU APRS')
+                    logger.info('-------------------------------------------')
+            logger.info("Destinatario %s NON trovato", destinatario)
 
-            logger.info('-------------------------------------------')
-            logger.info('MESSAGGIO INVIATO SU APRS')
-            logger.info('-------------------------------------------')
 
 
 def on_error(ws, error):

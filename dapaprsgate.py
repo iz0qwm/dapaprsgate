@@ -70,6 +70,8 @@ aprsissourcecallsign = cfg.get('aprsis','sourcecall')
 aprsishost = cfg.get('aprsis','host')
 aprspresencefile = cfg.get('aprsis','presencefile')
 
+# Svuoto il file delle presenze
+open(aprspresencefile, 'w').close()
 
 class APRSMessage(object):
     def __init__(self):

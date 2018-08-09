@@ -103,6 +103,7 @@ def on_message(ws, message):
                     rand = str(randint(0, 9))
                     # Creazione del messaggio di risposta ed invio
                     AIS.sendall('POCGAT-1>APOCSG::' + line + spazio + ': ' + clean2_messaggio + ' {' + rand + '')
+                    logger.info('POCGAT-1>APOCSG:: %s %s :%s {%s', line, spazio, clean2_messaggio, rand)
                     logger.info('-------------------------------------------')
                     logger.info('MESSAGGIO INVIATO SU APRS')
                     logger.info('-------------------------------------------')

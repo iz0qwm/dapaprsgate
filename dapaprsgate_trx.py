@@ -72,8 +72,10 @@ def on_message(ws, message):
 			#print("RIC: %s - Destinatario: %s - Messaggio: %s" % (destinatario, clean2_call_upper, clean2_messaggio))
         if clean2_messaggio.find("POCGAT") == -1:
                 #pass
+            logger.info('-------------------------------------------')
             logger.info("RIC: %s - Destinatario: %s - Messaggio: %s" , destinatario, clean2_call_upper, clean2_messaggio)
             logger.info("Messaggio solo per rete POCSAG")
+            logger.info('-------------------------------------------')
             # print "--------- %s" % message
         else:
             logger.info('-------------------------------------------')
@@ -83,12 +85,12 @@ def on_message(ws, message):
             logger.info("RIC: %s - Destinatario: %s - Messaggio: %s", destinatario, clean2_call_upper, clean2_messaggio)
             for line in file(aprspresencefile, "r"):
                 if clean2_call_upper in line:
-                    logger.info("Destinatario %s trovato", clean2_call_upper)
+                    logger.info("Destinatario %s trovato nella lista: %s", clean2_call_upper, line)
                     logger.info('-------------------------------------------')
                     logger.info('MESSAGGIO INVIATO SU APRS')
                     logger.info('-------------------------------------------')
             logger.info("Destinatario %s NON trovato", clean2_call_upper)
-
+            logger.info('-------------------------------------------')
 
 
 def on_error(ws, error):

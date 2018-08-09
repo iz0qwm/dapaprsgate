@@ -83,7 +83,7 @@ def on_message(ws, message):
             logger.info("RIC: %s - Destinatario: %s - Messaggio: %s" , destinatario, clean2_call_upper, clean2_messaggio)
             fileaprs = open(aprspresencefile, 'r')
             lettura = fileaprs.read()
-            for line in lettura
+            for line in lettura:
                 if destinatario in line:
                     logger.info("Destinatario %s trovato", destinatario)
             logger.info("Destinatario $s NON trovato", destinatario)

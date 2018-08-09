@@ -206,8 +206,8 @@ class APRSMessage(object):
 
 
 am = APRSMessage()
-at = threading.Timer(10.0, am.message_timer)
-at.start()
+#at = threading.Timer(10.0, am.message_timer)
+#at.start()
 
 # Mi collego a APRS-IS
 AIS = aprslib.IS(aprsisusername, passwd=aprsispassword, host=aprsishost, port=10152)
@@ -218,7 +218,7 @@ except:
         sys.exit(0)
 else:
         #connection to APRS-IS has been established, now continue
-	logger.info('Connesso al server APRS-IS: %s', aprsishost)
+	    logger.info('Connesso al server APRS-IS: %s', aprsishost)
 
 
 #AIS.consumer(callback, raw=False)

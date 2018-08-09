@@ -1,4 +1,5 @@
 #!/usr/bin/python
+import aprslib
 import websocket
 import json
 import string

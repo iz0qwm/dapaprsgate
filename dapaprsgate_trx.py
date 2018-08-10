@@ -85,7 +85,7 @@ def on_message(ws, message):
             #
         logger.info("RIC: %s - Destinatario: %s - Messaggio: %s", destinatario, clean2_call_upper, clean2_messaggio)
         for line in file(aprspresencefile, "r"):
-        line_strip = line.rstrip()
+                line_strip = line.rstrip()
                 if clean2_call_upper in line_strip:
                     logger.info("Destinatario %s trovato nella lista: %s", clean2_call_upper, line_strip)
                     AIS = aprslib.IS(aprsisusername, passwd=aprsispassword, host=aprsishost, port=int(aprsisport))

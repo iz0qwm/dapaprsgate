@@ -56,11 +56,11 @@ def on_message(ws, message):
         prev_mittente = "addr: "
         left,sep,right = string_message.partition(prev_mittente)
         destinatario = right[:6]
-        print destinatario
+        #print destinatario
         prima,messaggio = string_message.split('data:')
         clean1_messaggio = messaggio.replace("\" }']", "")
         clean2_messaggio = clean1_messaggio.replace(" \"", "")
-        if destinatario == "2504, " or destinatario == "165856" or destinatario == "8, ":
+        if destinatario == "2504, " or destinatario == "165856" or destinatario == "8, fun":
             pass
         else:
             ric = str(destinatario)

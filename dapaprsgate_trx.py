@@ -65,7 +65,7 @@ def on_message(ws, message):
 			ric = str(destinatario)
 			file_config = open(statefile,"r").readlines()
 			for i in range(len(file_config)):
-                if file_config[i].startswith(ric, 20):
+                    if file_config[i].startswith(ric, 20):
                         prima = file_config[i-6]
                         dopo = prima.splitlines()[0]
                         nome,call = dopo.split(":")

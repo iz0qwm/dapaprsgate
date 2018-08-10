@@ -50,9 +50,9 @@ def on_message(ws, message):
     json_message = json.loads(message)
     log_message = json_message['Log']
     string_message = str(log_message)
-	if string_message.find("data") == -1:
-		pass
-	else:
+    if string_message.find("data") == -1:
+        pass
+    else:
         prev_mittente = "addr: "
         left,sep,right = string_message.partition(prev_mittente)
         destinatario = right[:6]
@@ -72,7 +72,7 @@ def on_message(ws, message):
                         clean1_call = call.replace(" \"", "")
                         clean2_call = clean1_call.replace("\",","")
                         clean2_call_upper = clean2_call.upper()
-		#print("RIC: %s - Destinatario: %s - Messaggio: %s" % (destinatario, clean2_call_upper, clean2_messaggio))
+        #print("RIC: %s - Destinatario: %s - Messaggio: %s" % (destinatario, clean2_call_upper, clean2_messaggio))
         # if clean2_messaggio.find("POCGAT") == -1:
             #logger.info('-------------------------------------------')
             #logger.info("RIC: %s - Destinatario: %s - Messaggio: %s", destinatario, clean2_call_upper, clean2_messaggio)
@@ -132,13 +132,13 @@ def on_open(ws):
     def run(*args):
         for i in range(3):
             time.sleep(1)
-	    string_to_send = "{\"GetStatus\"}"
-            #ws.send("Hello %d" % i)
-            ws.send(string_to_send)
+        string_to_send = "{\"GetStatus\"}"
+        #ws.send("Hello %d" % i)
+        ws.send(string_to_send)
         time.sleep(5)
         #ws.close()
         #print("thread terminating...")
-    thread.start_new_thread(run, ())
+        thread.start_new_thread(run, ())
 
 
 if __name__ == "__main__":

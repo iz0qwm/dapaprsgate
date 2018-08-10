@@ -49,7 +49,7 @@ import time
 def on_message(ws, message):
     json_message = json.loads(message)
     log_message = json_message['Log']
-	string_message = str(log_message)
+    string_message = str(log_message)
 	if string_message.find("data") == -1:
 		pass
 	else:

@@ -65,13 +65,13 @@ def on_message(ws, message):
 			ric = str(destinatario)
 			file_config = open(statefile,"r").readlines()
 			for i in range(len(file_config)):
-                    if file_config[i].startswith(ric, 20):
-                        prima = file_config[i-6]
-                        dopo = prima.splitlines()[0]
-                        nome,call = dopo.split(":")
-                        clean1_call = call.replace(" \"", "")
-                        clean2_call = clean1_call.replace("\",","")
-					clean2_call_upper = clean2_call.upper()
+                if file_config[i].startswith(ric, 20):
+                    prima = file_config[i-6]
+                    dopo = prima.splitlines()[0]
+                    nome,call = dopo.split(":")
+                    clean1_call = call.replace(" \"", "")
+                    clean2_call = clean1_call.replace("\",","")
+                    clean2_call_upper = clean2_call.upper()
 			#print("RIC: %s - Destinatario: %s - Messaggio: %s" % (destinatario, clean2_call_upper, clean2_messaggio))
        # if clean2_messaggio.find("POCGAT") == -1:
             #logger.info('-------------------------------------------')

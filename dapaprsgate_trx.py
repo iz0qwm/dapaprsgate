@@ -50,6 +50,7 @@ def on_message(ws, message):
     json_message = json.loads(message)
     log_message = json_message['Log']
     string_message = str(log_message)
+    print string_message
     if string_message.find("data") == -1:
         pass
     else:
@@ -82,7 +83,7 @@ def on_message(ws, message):
             logger.info('-------------------------------------------')
             logger.info(' MESSAGGIO DAPNET ----> APRS ')
             logger.info('-------------------------------------------')
-                #
+            #
             logger.info("RIC: %s - Destinatario: %s - Messaggio: %s", destinatario, clean2_call_upper, clean2_messaggio)
             for line in file(aprspresencefile, "r"):
                     line_strip = line.rstrip()

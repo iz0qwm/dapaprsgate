@@ -5,8 +5,8 @@ L'idea è di permettere l'invio di messaggi dall'APRS verso il mondo DAPNET (POC
 
 Messaggi da APRS -> DAPNET
 ---------------------------
-Inviare un messaggio a POCGAT-1<br/>
-Nel testo scrivere  DESTINATARIO@testo del messaggio  
+Inviare un messaggio a **POCGAT-1**<br/>
+Nel testo scrivere __DESTINATARIO@testo del messaggio__  
   
 Es.<br/>
 ```
@@ -14,7 +14,7 @@ Es.<br/>
        Testo: IZ0QWM@Questo è un messaggio per IZ0QWM  
 ```
 
-Per istruzioni via APRS inviare un messaggio a POCGAT-1 con ?
+Per istruzioni via APRS inviare un messaggio a **POCGAT-1** con __?__
 
 Es.  
 ```
@@ -27,9 +27,9 @@ Si riceverà una risposta con:
 ```
 
 ###### Se su APRS vuoi ricevere messaggi dal DAPNET devi:  
-*1.* essere registrato anche su DAPNET (con RIC)  
-*2.* Scrivere nel messaggio di stato la parola POCGAT  
-Es. Raffaello www.kwos.it su DACIA DUSTER - POCGAT
+**1.** essere registrato anche su DAPNET (con RIC)  
+**2.** Scrivere nel messaggio di stato la parola POCGAT  
+Es. __Raffaello www.kwos.it su DACIA DUSTER - POCGAT__
   
 Messaggi da DAPNET -> APRS
 --------------------------
@@ -37,7 +37,7 @@ Messaggi da DAPNET -> APRS
 Due modalità:  
 
 - Dalla APP inviare un messaggio normalmente ma avere l'accortezza di scegliere tra 
-i gruppi di transmitters: *APRS* o *POCGAT*.  
+i gruppi di transmitters: **APRS** o **POCGAT**.  
 
   Es.  
 ```
@@ -57,6 +57,6 @@ la parola *POCGAT*
 ```
 
 In questo modo il messaggio sarà destinato a IU7IGU sia su rete DAPNET che su APRS.  
-Sempre che IU7IGU abbia soddisfatto i punti *1* e *2*  
+Sempre che IU7IGU abbia soddisfatto i punti **1** e **2**  
 
  

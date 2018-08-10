@@ -96,7 +96,7 @@ def on_message(ws, message):
                     sys.exit(0)
                 else:
                 #connection to APRS-IS has been established, now continue
-                logger.info('Connesso al server APRS-IS: %s', aprsishost)
+                    logger.info('Connesso al server APRS-IS: %s', aprsishost)
 
         # ATTENZIONE il nominativo tra due :: deve essere sempre 8 caratteri + uno spazio
         lunghezza = len(line_strip)

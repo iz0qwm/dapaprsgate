@@ -47,33 +47,33 @@ except ImportError:
 import time
 
 def on_message(ws, message):
-    	json_message = json.loads(message) 
-    	log_message = json_message['Log']
+    json_message = json.loads(message)
+    log_message = json_message['Log']
 	string_message = str(log_message)
 	if string_message.find("data") == -1:
 		pass
 	else:
-                prev_mittente = "addr: "
-		left,sep,right = string_message.partition(prev_mittente)
-		destinatario = right[:6]
-		prima,messaggio = string_message.split('data:')
+        prev_mittente = "addr: "
+        left,sep,right = string_message.partition(prev_mittente)
+        destinatario = right[:6]
+        prima,messaggio = string_message.split('data:')
                 clean1_messaggio = messaggio.replace("\" }']", "")
                 clean2_messaggio = clean1_messaggio.replace(" \"", "")
-		if destinatario == "2504, " or destinatario == "165856":
-			pass
-		else:
-			ric = str(destinatario)
-			file_config = open(statefile,"r").readlines()
-			for i in range(len(file_config)):
-                if file_config[i].startswith(ric, 20):
-                    prima = file_config[i-6]
-                    dopo = prima.splitlines()[0]
-                    nome,call = dopo.split(":")
-                    clean1_call = call.replace(" \"", "")
-                    clean2_call = clean1_call.replace("\",","")
-                    clean2_call_upper = clean2_call.upper()
-			#print("RIC: %s - Destinatario: %s - Messaggio: %s" % (destinatario, clean2_call_upper, clean2_messaggio))
-       # if clean2_messaggio.find("POCGAT") == -1:
+        if destinatario == "2504, " or destinatario == "165856":
+            pass
+        else:
+            ric = str(destinatario)
+            file_config = open(statefile,"r").readlines()
+            for i in range(len(file_config)):
+                    if file_config[i].startswith(ric, 20):
+                        prima = file_config[i-6]
+                        dopo = prima.splitlines()[0]
+                        nome,call = dopo.split(":")
+                        clean1_call = call.replace(" \"", "")
+                        clean2_call = clean1_call.replace("\",","")
+                        clean2_call_upper = clean2_call.upper()
+		#print("RIC: %s - Destinatario: %s - Messaggio: %s" % (destinatario, clean2_call_upper, clean2_messaggio))
+        # if clean2_messaggio.find("POCGAT") == -1:
             #logger.info('-------------------------------------------')
             #logger.info("RIC: %s - Destinatario: %s - Messaggio: %s", destinatario, clean2_call_upper, clean2_messaggio)
             #logger.info("Messaggio solo per rete POCSAG")

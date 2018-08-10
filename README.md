@@ -34,8 +34,6 @@ Es. __Raffaello www.kwos.it su DACIA DUSTER - POCGAT__
 Messaggi da DAPNET -> APRS
 --------------------------
 
-Due modalità:  
-
 - Dalla APP inviare un messaggio normalmente ma avere l'accortezza di scegliere tra 
 i gruppi di transmitters: **APRS** o **POCGAT**.  
 
@@ -44,16 +42,6 @@ i gruppi di transmitters: **APRS** o **POCGAT**.
   Messaggio: IZ0QWM: Messaggio da inviare via APRS
   Callsign: IU7IGU
   Transmitters group: APRS
-```
-
-- Inviare un messaggio ma avere l'accortezza di scrivere al termine
-la parola *POCGAT*
-
-  Es.  
-```
-  Messaggio: IZ0QWM: Messaggio da inviare anche in aprs - POCGAT
-  Callsign: IU7IGU
-  Transmitters group: ALL
 ```
 
 In questo modo il messaggio sarà destinato a IU7IGU sia su rete DAPNET che su APRS.  

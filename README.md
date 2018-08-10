@@ -26,7 +26,7 @@ Si riceverà una risposta con:
 	POCSAT GATEWAY: usa CALL@testo messaggio - www.dapnet-italia.it  
 ```
 
-#####Se su APRS vuoi ricevere messaggi dal DAPNET devi:  
+###### Se su APRS vuoi ricevere messaggi dal DAPNET devi:  
 *1.* essere registrato anche su DAPNET (con RIC)  
 *2.* Scrivere nel messaggio di stato la parola POCGAT  
 Es. Raffaello www.kwos.it su DACIA DUSTER - POCGAT

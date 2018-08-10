@@ -50,17 +50,17 @@ def on_message(ws, message):
     json_message = json.loads(message)
     log_message = json_message['Log']
     string_message = str(log_message)
-    print string_message
     if string_message.find("data") == -1:
         pass
     else:
         prev_mittente = "addr: "
         left,sep,right = string_message.partition(prev_mittente)
         destinatario = right[:6]
+        print destinatario
         prima,messaggio = string_message.split('data:')
         clean1_messaggio = messaggio.replace("\" }']", "")
         clean2_messaggio = clean1_messaggio.replace(" \"", "")
-        if destinatario == "2504, " or destinatario == "165856" or destinatario == "8":
+        if destinatario == "2504, " or destinatario == "165856" or destinatario == "8, ":
             pass
         else:
             ric = str(destinatario)

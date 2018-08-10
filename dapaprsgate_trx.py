@@ -57,8 +57,8 @@ def on_message(ws, message):
         left,sep,right = string_message.partition(prev_mittente)
         destinatario = right[:6]
         prima,messaggio = string_message.split('data:')
-                clean1_messaggio = messaggio.replace("\" }']", "")
-                clean2_messaggio = clean1_messaggio.replace(" \"", "")
+        clean1_messaggio = messaggio.replace("\" }']", "")
+        clean2_messaggio = clean1_messaggio.replace(" \"", "")
         if destinatario == "2504, " or destinatario == "165856":
             pass
         else:

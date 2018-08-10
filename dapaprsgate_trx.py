@@ -89,37 +89,38 @@ def on_message(ws, message):
                     if clean2_call_upper in line_strip:
                         logger.info("Destinatario %s trovato nella lista: %s", clean2_call_upper, line_strip)
                         AIS = aprslib.IS(aprsisusername, passwd=aprsispassword, host=aprsishost, port=int(aprsisport))
-                    try:
-                        AIS.connect()
-                    except:
-                        logger.error('Invalid APRS credentials')
-                        sys.exit(0)
-                    else:
-                    #connection to APRS-IS has been established, now continue
-                        logger.info('Connesso al server APRS-IS: %s', aprsishost)
+                        try:
+                            AIS.connect()
+                        except:
+                            logger.error('Invalid APRS credentials')
+                            sys.exit(0)
+                        else:
+                        #connection to APRS-IS has been established, now continue
+                            logger.info('Connesso al server APRS-IS: %s', aprsishost)
 
-            # ATTENZIONE il nominativo tra due :: deve essere sempre 8 caratteri + uno spazio
-            lunghezza = len(line_strip)
-            if lunghezza == 5:
-                spazio = "    "
-            elif lunghezza == 6:
-                spazio = "   "
-            elif lunghezza == 7:
-                spazio = "  "
-            elif lunghezza == 8:
-                spazio = " "
-            else:
-                spazio = ""
-            # ATTENZIONE creazione numero random da mettere dopo le parentesi graffe
-            rand = str(randint(0, 9))
-            # Creazione del messaggio di risposta ed invio
-            AIS.sendall('POCGAT-1>APOCSG::' + line_strip + spazio + ': ' + clean2_messaggio + ' {' + rand + '')
-            # logger.info('POCGAT-1>APOCSG:: %s %s :%s {%s', line_strip, spazio, clean2_messaggio, rand)
-            logger.info('-------------------------------------------')
-            logger.info('MESSAGGIO INVIATO SU APRS')
-            logger.info('-------------------------------------------')
-            logger.info("Destinatario %s NON trovato", clean2_call_upper)
-            logger.info('-------------------------------------------')
+                        # ATTENZIONE il nominativo tra due :: deve essere sempre 8 caratteri + uno spazio
+                        lunghezza = len(line_strip)
+                        if lunghezza == 5:
+                            spazio = "    "
+                        elif lunghezza == 6:
+                            spazio = "   "
+                        elif lunghezza == 7:
+                            spazio = "  "
+                        elif lunghezza == 8:
+                            spazio = " "
+                        else:
+                            spazio = ""
+                        # ATTENZIONE creazione numero random da mettere dopo le parentesi graffe
+                        rand = str(randint(0, 9))
+                        # Creazione del messaggio di risposta ed invio
+                        AIS.sendall('POCGAT-1>APOCSG::' + line_strip + spazio + ': ' + clean2_messaggio + ' {' + rand + '')
+                        # logger.info('POCGAT-1>APOCSG:: %s %s :%s {%s', line_strip, spazio, clean2_messaggio, rand)
+                        logger.info('-------------------------------------------')
+                        logger.info('MESSAGGIO INVIATO SU APRS')
+                        logger.info('-------------------------------------------')
+                    else:
+                        logger.info("Destinatario %s NON trovato", clean2_call_upper)
+                        logger.info('-------------------------------------------')
 
 
 def on_error(ws, error):

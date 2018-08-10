@@ -89,7 +89,15 @@ def on_message(ws, message):
                 if clean2_call_upper in line_strip:
                     logger.info("Destinatario %s trovato nella lista: %s", clean2_call_upper, line_strip)
                     AIS = aprslib.IS(aprsisusername, passwd=aprsispassword, host=aprsishost, port=int(aprsisport))
-                    AIS.connect()
+	       	    try:
+        		AIS.connect()
+		    except:
+        		logger.error('Invalid APRS credentials')
+        		sys.exit(0)
+	            else:
+        		#connection to APRS-IS has been established, now continue
+        		logger.info('Connesso al server APRS-IS: %s', aprsishost)
+
                     # ATTENZIONE il nominativo tra due :: deve essere sempre 8 caratteri + uno spazio
                     lunghezza = len(line_strip)
                     if lunghezza == 5:

@@ -10,6 +10,8 @@ import requests
 import logging
 import configparser
 from random import randint
+import subprocess
+version = subprocess.check_output(["git", "describe"]).strip()
 
 # Leggo il file di configurazione
 cfg = configparser.RawConfigParser()
@@ -80,6 +82,7 @@ def on_message(ws, message):
                 #logger.info("Messaggio solo per rete POCSAG")
                 #logger.info('-------------------------------------------')
             #else:
+            logger.info('dapaprsgate_trx %s engaged...', version)
             logger.info('-------------------------------------------')
             logger.info(' MESSAGGIO DAPNET ----> APRS ')
             logger.info('-------------------------------------------')

@@ -40,6 +40,8 @@ import requests
 import websocket
 import string
 from random import randint
+import subprocess
+version = subprocess.check_output(["git", "describe"]).strip()
 
 # Leggo il file di configurazione
 cfg = configparser.RawConfigParser()
@@ -255,6 +257,7 @@ except:
         sys.exit(0)
 else:
         #connection to APRS-IS has been established, now continue
+        logger.info('dapaprsgate %s starting...', version)
         logger.info('Connesso al server APRS-IS: %s', aprsishost)
 
 

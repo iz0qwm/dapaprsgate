@@ -111,7 +111,7 @@ class APRSMessage(object):
 	time.sleep(1)
 
     # Cancello il file delle presenze su APRS ogni 5 minuti
-    rt = RepeatedTimer(1200, cancello_sometimes)
+    rt = RepeatedTimer(320, cancello_sometimes)
 
     def __init__(self):
         self.message = None

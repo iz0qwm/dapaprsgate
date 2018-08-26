@@ -54,9 +54,12 @@ except:
         logger.error('dapaprsgate could not find / read config file')
         sys.exit(0)
 
-#logging.basicConfig(filename='dapaprsgate.log',level=logging.INFO) # level=10
-logger = logging.getLogger('dapnet')
-handler = logging.FileHandler('dapaprsgate.log')
+# Leggo la posizione del log file
+logfile = cfg.get('misc', 'logfile')
+
+#logger = logging.getLogger('dapnet')
+logger = logging.getLogger('aprslib.inet.IS')
+handler = logging.FileHandler(logfile)
 logformat = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
 handler.setFormatter(logformat)
 logger.addHandler(handler)
@@ -73,6 +76,7 @@ aprsispassword = cfg.get('aprsis','password')
 aprsissourcecallsign = cfg.get('aprsis','sourcecall')
 aprsishost = cfg.get('aprsis','host')
 aprsisport = cfg.get('aprsis','port')
+aprsisfilter = cfg.get('aprsis','filter')
 aprspresencefile = cfg.get('aprsis','presencefile')
 
 # Svuoto il file delle presenze
@@ -110,8 +114,8 @@ class APRSMessage(object):
         open(aprspresencefile, 'w').close()
 	time.sleep(1)
 
-    # Cancello il file delle presenze su APRS ogni 5 minuti
-    rt = RepeatedTimer(320, cancello_sometimes)
+    # Cancello il file delle presenze su APRS ogni 60 minuti
+    rt = RepeatedTimer(3600, cancello_sometimes)
 
     def __init__(self):
         self.message = None
@@ -126,30 +130,31 @@ class APRSMessage(object):
 		# Vede il campo From ma seleziona solo gli Italiani
 		da = aprs_data.get('from') 
 		# Solo se sei italiano (Il call inizia con "I")
-		regex = re.compile('^I')
-		if re.match(regex, da):
-			logger.info('###################')
-			logger.info(' ATTIVO PER POCSAG')
-			logger.info('###################')
-       			logger.debug('Received message: %s', message)
-			logger.info('Attivo: %s', aprs_data.get('from'))
-			logger.info('###################')
+                # sostituito con il filtro su server APRS
+		#regex = re.compile('^I')
+		#if re.match(regex, da):
+	        logger.info('###################')
+		logger.info(' ATTIVO PER POCSAG')
+		logger.info('###################')
+       		logger.debug('Received message: %s', message)
+		logger.info('Attivo: %s', aprs_data.get('from'))
+		logger.info('###################')
 
-			# Inserisci nominativo nella lista dei reperibili
-			call_attivo = aprs_data.get('from')
-			if os.path.exists(aprspresencefile):
-    				append_write = 'a+' # append if already exists
-			else:
-    				append_write = 'w+' # make a new file if not
-			fileaprs = open(aprspresencefile,append_write)
+		# Inserisci nominativo nella lista dei reperibili
+		call_attivo = aprs_data.get('from')
+		if os.path.exists(aprspresencefile):
+    			append_write = 'a+' # append if already exists
+		else:
+    			append_write = 'w+' # make a new file if not
+		fileaprs = open(aprspresencefile,append_write)
 
-			lettura = fileaprs.read()
-			search_call = call_attivo
-			if (search_call in lettura):
-				pass
-			else:
-				fileaprs.write(call_attivo + '\n')
-			fileaprs.close()
+		lettura = fileaprs.read()
+		search_call = call_attivo
+		if (search_call in lettura):
+			pass
+		else:
+			fileaprs.write(call_attivo + '\n')
+		fileaprs.close()
 
 #
 # Invio messaggio su DAPNET se inviato a POCGAT-1
@@ -253,15 +258,25 @@ AIS = aprslib.IS(aprsisusername, passwd=aprsispassword, host=aprsishost, port=in
 try:
         AIS.connect()
 except:
-        logger.error('Invalid APRS credentials')
+        logger.error('Invalid APRS credentials or connection not available')
         sys.exit(0)
 else:
         #connection to APRS-IS has been established, now continue
         logger.info('dapaprsgate %s starting...', version)
         logger.info('Connesso al server APRS-IS: %s', aprsishost)
+"""
+When a position sentence is received, it will be passed to the callback function
 
+blocking: if true (default), runs forever, otherwise will return after one sentence
+          You can still exit the loop, by raising StopIteration in the callback function
 
-AIS.consumer(callback=am.set_message, raw=True)
+immortal: When true, consumer will try to reconnect and stop propagation of Parse exceptions
+          if false (default), consumer will return
+
+raw: when true, raw packet is passed to callback, otherwise the result from aprs.parse()
+"""
+AIS.set_filter(aprsisfilter)
+AIS.consumer(callback=am.set_message, immortal=True, raw=True)
 
 
 

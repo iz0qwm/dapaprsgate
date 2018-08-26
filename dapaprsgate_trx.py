@@ -24,9 +24,12 @@ except:
         logger.error('dapaprsgate could not find / read config file')
         sys.exit(0)
 
+# Leggo la posizione del log file
+logfile = cfg.get('misc', 'logfile')
+
 #logging.basicConfig(filename='dapaprsgate.log',level=logging.INFO) # level=10
-logger = logging.getLogger('dapnet')
-handler = logging.FileHandler('dapaprsgate.log')
+logger = logging.getLogger('aprslib.inet.IS')
+handler = logging.FileHandler(logfile)
 logformat = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
 handler.setFormatter(logformat)
 logger.addHandler(handler)

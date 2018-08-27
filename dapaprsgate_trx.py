@@ -21,7 +21,7 @@ try:
         cfg.read(config_file)
 except:
         #no luck reading the config file, write error and bail out
-        logger.error('dapaprsgate could not find / read config file')
+        print("dapaprsgate could not find / read config file")
         sys.exit(0)
 
 # Leggo la posizione del log file

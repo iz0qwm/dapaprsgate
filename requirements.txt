@@ -1,0 +1,4 @@
+urllib3==1.19.1
+requests==2.19.1
+aprslib==0.6.46
+websocket_client==0.51.0
